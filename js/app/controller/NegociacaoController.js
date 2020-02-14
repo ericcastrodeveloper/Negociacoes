@@ -10,6 +10,8 @@ class NegociacaoController {
         this._listNegociacoes = new ListaNegociacoes();
         this._negociacoesView = new NegociacoesView($("#negociacoesView"));
         this._negociacoesView.update(this._listNegociacoes)
+        this._mensagemView = new MensagemView($("#mensagemView"));
+        this._mensagem = new Mensagem();
 
     }
 
@@ -20,6 +22,8 @@ class NegociacaoController {
         this._negociacoesView.update(this._listNegociacoes)
         this._limpaFormulario();
         console.log("negociacoes =>", this._listNegociacoes.negociacoes)
+        this._mensagem.texto = "Negociação adicionada!"
+        this._mensagemView.update(this._mensagem)
 
     }
 
