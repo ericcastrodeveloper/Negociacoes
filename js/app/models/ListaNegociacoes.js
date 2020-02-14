@@ -8,6 +8,10 @@ class ListaNegociacoes{
         this._negociacoes.push(negociacoes)
     }
 
+    esvazia(){
+        this._negociacoes = []
+    }
+
     get negociacoes(){
         //return this_negociacoes
 
