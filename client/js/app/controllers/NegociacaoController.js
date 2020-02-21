@@ -50,6 +50,38 @@ class NegociacaoController {
 
     importaNegociacoes() {
         let service = new NegociacaoService();
+
+        //Promise.all([
+            //service.obterNegociacoesDaSemana(),
+            //service.obterNegociacoesDaSemanaAnterior(),
+            //service.obterNegociacoesDaSemanaRetrasada()
+            //service.obterNegociacoesSemana4()
+        //])
+        //passando uma função como parâmetro que recebe 2 parâmetros
+        service.obterNegociacoesSemana3()
+        .then(negociacoes => {
+
+            //arrayFlat - todas as listas
+            //primeiro parametro a concatenação das listas, segundo lista vazia
+            negociacoes.reduce((arrayFlat, array) => arrayFlat.concat(array), [])
+
+            negociacoes.forEach(negociacao => this._listaNegociacoes.adiciona(negociacao))
+            this._negociacoesView.update(this._listaNegociacoes);
+
+            this._mensagem.texto = "Negociações importadas com sucesso!";
+            this._mensagemView.update(this._mensagem);
+        })
+        .catch(
+            erro => {
+                this._mensagem.texto = erro;
+                this._mensagemView.update(this._mensagem);
+            }
+        )
+    }
+
+    //com callback cb
+    importaNegociacoes2() {
+        let service = new NegociacaoService();
         //passando uma função como parâmetro que recebe 2 parâmetros
         service.obterNegociacoesSemana2((erro, negociacoes) => {
             //tem algo em erro
@@ -64,6 +96,24 @@ class NegociacaoController {
                 this._mensagem.texto = "Negociações importadas com sucesso!";
                 this._mensagemView.update(this._mensagem);
             }
+        });
+    }
+
+    importaNegociacoes3(){
+        let service = new NegociacaoService();
+
+        negociacao.obterNegociacoesSemana4().then(negociacoes =>
+            negociacoes.forEach(negociacao => {
+                this._listaNegociacoes.adiciona(negociacao);
+                this._mensagem.texto = "Negociações do período importadas";
+                this._negociacoesView.update(this._listaNegociacoes);
+                this._mensagemView.update(this._mensagem);
+            })
+        )
+        .catch(erro => {
+            this._mensagem.texto = erro;
+            this._mensagemView.update(this._mensagem);
+            return;
         });
     }
 }
